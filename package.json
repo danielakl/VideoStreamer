@@ -1,0 +1,34 @@
+{
+  "name": "screenshare",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Share your screen with anyone connected to the server using only your browser.",
+  "main": "app.js",
+  "scripts": {
+    "tsc": "tsc",
+    "start": "tsc && node ./dist/bin/www.js"
+  },
+  "keywords": [
+    "Screen sharing",
+    "socket.io"
+  ],
+  "author": "Daniel Aune Klock",
+  "contributors": [
+    "Roy Åne Sylthe",
+    "Rolv Arild Braaten",
+    "August Indal",
+    "Kristoffer Arntzen",
+    "Joakim Sæther"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "http-errors": "^1.6.3",
+    "morgan": "^1.9.0",
+    "socket.io": "^2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^9.6.2"
+  }
+}
