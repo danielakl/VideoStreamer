@@ -12,7 +12,6 @@ class App {
         this.express = express();
         this.express.use(logger('dev'));
         this.express.use(express.static(Path.join(__dirname, '..', 'public')));
-        console.log(Path.join(__dirname, '..', 'public'));
         this.mountRoutes();
     }
 

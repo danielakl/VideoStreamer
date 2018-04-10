@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 import app from '../app';
-import deb from 'debug';
+// import debug from 'debug';
+// const deb = require('debug')('http');
 import * as http from 'http';
 
-const debug = deb('temp:server');
+// const debug = deb('temp:server');
 
 /**
  * Get port from environment and store in Express.
@@ -78,5 +79,6 @@ function onListening() {
     const bind = typeof addr === 'string'
         ? 'pipe ' + addr
         : 'port ' + addr.port;
-    debug('Listening on ' + bind);
+    // debug('Listening on ' + bind);
+    console.log("Listening on " + bind + "\nPS. debug does not work.")
 }
