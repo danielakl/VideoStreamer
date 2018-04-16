@@ -4,7 +4,7 @@ import * as Path from "path";
 
 const router: express.Router = express.Router();
 
-router.get('/', (req: express.request, res: express.response) => {
+router.get('/', (req, res) => {
     res.sendFile(Path.join(__dirname, '..', '..', 'public', 'index.html'));
 });
 
@@ -35,6 +35,10 @@ router.get('/video', (req, res) => {
         res.writeHead(200, head);
         fs.createReadStream(path).pipe(res);
     }
+});
+
+router.get("/video2", (req, res) => {
+
 });
 
 export default router;

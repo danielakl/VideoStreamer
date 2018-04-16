@@ -4,6 +4,10 @@ import app from '../app';
 // import debug from 'debug';
 // const deb = require('debug')('http');
 import * as http from 'http';
+import * as SocketIO from 'socket.io';
+import * as fs from "fs";
+import * as Path from "path";
+import * as SocketIOStream from "socket.io-stream"
 
 // const debug = deb('temp:server');
 
@@ -17,6 +21,28 @@ app.set('port', port);
  * Create HTTP server.
  */
 const server = http.createServer(app);
+const io = SocketIO(server);
+io.on('connection', socket => {
+    console.log("Established connection with a client.");   // TODO: Remove debugging
+    socket.on('video-stream', settings => {
+        console.log("Client requesting video stream"); // TODO: Remove debugging
+        const filePath = Path.join(__dirname, '..', '..', 'public', 'videos', 'sample.mp4');
+        // const fileSize = fs.statSync(filePath).size;
+        // const buffer = Buffer.alloc((fileSize < 1048576) ? fileSize : 1048576); // Buffer of 1 MiB
+        // const stream = fs.createReadStream(filePath);
+        SocketIOStream(socket).on('video-stream', (stream, data) => {
+            console.log("Creating stream.");
+            fs.createReadStream(filePath).pipe(stream);
+        });
+        // stream.on('data', data => {
+        //     io.emit('video-stream', data);
+        // });
+
+    });
+    socket.on('disconnect', () => {
+        console.log("A client disconnected.");  // TODO: Remove debugging
+    })
+});
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -28,7 +54,7 @@ server.on('listening', onListening);
 /**
  * Normalize a port into a number, string, or false.
  */
-function normalizePort(val) {
+function normalizePort(val: number | string): string | number | false {
     const port = parseInt(val, 10);
 
     if (isNaN(port)) {

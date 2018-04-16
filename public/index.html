@@ -6,10 +6,14 @@
 
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"></script>
+        <script defer src="socket.io-stream.js"></script>
+        <script defer src="stream.js"></script>
     </head>
     <body>
-        <video height="400" width="400" autoplay controls>
-            <source src="http://localhost:3000/video" type="video/mp4">
+        <video height="400" width="400" controls>
+            <source id="video" type="video/mp4" src="">
         </video>
     </body>
 </html>
