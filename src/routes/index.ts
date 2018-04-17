@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/video', (req, res) => {
-    const path = Path.join(__dirname, '..', '..', 'public', 'videos', 'sample.mp4');
+    const path = Path.join(__dirname, '..', '..', 'public', 'videos', 'sample.webm');
     const stat = fs.statSync(path);
     const fileSize = stat.size;
     const range = req.headers.range;
