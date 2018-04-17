@@ -1,7 +1,6 @@
 var videoPlayer = document.querySelector("#videoPlayer");
 var videoSource = document.querySelector("#videoSource");
 var mediaSource = new MediaSource();
-var dataBuffer = new Uint8Array(1024 * 1024);
 var queue = [];
 var isFirstChunk = true;
 
@@ -18,14 +17,14 @@ if (videoPlayer) {
             socket.emit("video-stream");
             socket.on("video-stream", function(data) {
                 console.log("Got data " + data);
-                if (dataBuffer.length < 1024 * 1024 - data.length) {
-                    dataBuffer.push(data);
-                }
                 if (isFirstChunk) {
                     sourceBuffer.appendBuffer(data);
                     isFirstChunk = false;
                 } else {
                     queue.push(data);
+                    if (mediaSource.readyState === 'open') {
+                        sourceBuffer.appendBuffer(queue.shift());
+                    }
                 }
             });
             sourceBuffer.addEventListener('updateend', function() {
