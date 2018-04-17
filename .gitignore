@@ -1,7 +1,5 @@
 ## Using typescript instead of javascript files.
 dist/
-## Ignore video assets.
-public/videos/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
