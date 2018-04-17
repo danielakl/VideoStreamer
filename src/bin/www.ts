@@ -26,8 +26,8 @@ io.on('connection', socket => {
     console.log("Established connection with a client.");
     socket.on('video-stream', settings => {
         console.log("Client requesting video stream");
-        const filePath = Path.join(__dirname, '..', '..', 'public', 'videos', 'sample.mp4');
-        const stream = fs.createReadStream(filePath, {highWaterMark: 500 * 1024});
+        const filePath = Path.join(__dirname, '..', '..', 'public', 'videos', 'elephants-dream.webm');
+        const stream = fs.createReadStream(filePath, {highWaterMark: 1024 * 1024});
         stream.on('data', data => {
             socket.emit('video-stream', data);
         });

@@ -12,12 +12,12 @@ if (videoPlayer) {
     videoSource.src = URL.createObjectURL(mediaSource);
     mediaSource.addEventListener('sourceopen', function(event) {
         console.log("MediaSource open");
-        var sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+        var sourceBuffer = mediaSource.addSourceBuffer('video/webm; codecs="vorbis,vp8"');
         socket.on('connect', function() {
             console.log("Open connection");
             socket.emit("video-stream");
             socket.on("video-stream", function(data) {
-                console.log("Got data " + data.length);
+                console.log("Got data " + data);
                 if (dataBuffer.length < 1024 * 1024 - data.length) {
                     dataBuffer.push(data);
                 }
