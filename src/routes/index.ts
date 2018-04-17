@@ -37,8 +37,4 @@ router.get('/video', (req, res) => {
     }
 });
 
-router.get("/video2", (req, res) => {
-
-});
-
 export default router;

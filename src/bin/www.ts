@@ -31,13 +31,6 @@ io.on('connection', socket => {
         stream.on('data', data => {
             socket.emit('video-stream', data);
         });
-        // const fileSize = fs.statSync(filePath).size;
-        // const buffer = Buffer.alloc((fileSize < 1048576) ? fileSize : 1048576); // Buffer of 1 MiB
-        // const stream = fs.createReadStream(filePath);
-        // SocketIOStream(socket).on('video-stream', (stream, data) => {
-        //     console.log("Streaming.");
-        //     fs.createReadStream(filePath).pipe(stream);
-        // });
     });
     socket.on('disconnect', () => {
         console.log("A client disconnected.");
