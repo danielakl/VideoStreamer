@@ -19,8 +19,9 @@ git clone https://github.com/danielakl/VideoStreamer.git
 cd VideoStreamer
 
 # Step 4
-npm install
-npm start
+npm install     // Install nodejs dependencies.
+npm run tsc     // Compile typescript.
+npm start       // Start server
 ```
 
 ## Built With

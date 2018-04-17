@@ -1,24 +1,41 @@
-const videoPlayer = document.querySelector("#video");
-// const mediaSource = new MediaSource();
+var videoPlayer = document.querySelector("#videoPlayer");
+var videoSource = document.querySelector("#videoSource");
+var mediaSource = new MediaSource();
+var dataBuffer = new Uint8Array(1024 * 1024);
+var queue = [];
+var isFirstChunk = true;
 
 if (videoPlayer) {
+    videoPlayer.pause();
     var URL = window.URL || window.webkitURL;
-    var buffer = new Uint8Array();
-    // videoPlayer.src = URL.createObjectURL(mediaSource);
     var socket = io(window.location.href);
-    // mediaSource.addEventListener('sourceopen', function(event) {
-    //     var sourceBuffer = mediaSource.addSourceBuffer('video/mp4');
+    videoSource.src = URL.createObjectURL(mediaSource);
+    mediaSource.addEventListener('sourceopen', function(event) {
+        console.log("MediaSource open");
+        var sourceBuffer = mediaSource.addSourceBuffer('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
         socket.on('connect', function() {
-            console.log("Open connection"); // TODO: Remove debugging.
+            console.log("Open connection");
             socket.emit("video-stream");
             socket.on("video-stream", function(data) {
-                console.log("Got data");
-                var blob = ss.createBlobReadStream(data);
-                videoPlayer.src = URL.createObjectURL(blob);
-                // sourceBuffer.appendBuffer(data);
+                console.log("Got data " + data.length);
+                if (dataBuffer.length < 1024 * 1024 - data.length) {
+                    dataBuffer.push(data);
+                }
+                if (isFirstChunk) {
+                    sourceBuffer.appendBuffer(data);
+                    isFirstChunk = false;
+                } else {
+                    queue.push(data);
+                }
+            });
+            sourceBuffer.addEventListener('updateend', function() {
+                if (queue.length) {
+                    console.log("MediaSource ready, queue");
+                    sourceBuffer.appendBuffer(queue.shift());
+                }
             });
         });
-    // }, false);
+    }, false);
     videoPlayer.load();
     videoPlayer.onloadeddata = function() {
         videoPlayer.play();
