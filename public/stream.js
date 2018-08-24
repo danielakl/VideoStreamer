@@ -30,7 +30,9 @@ if (videoPlayer) {
             sourceBuffer.addEventListener('updateend', function() {
                 if (queue.length) {
                     console.log("MediaSource ready, queue");
-                    sourceBuffer.appendBuffer(queue.shift());
+                    if (mediaSource.readyState === 'open') {
+                        sourceBuffer.appendBuffer(queue.shift());
+                    }
                 }
             });
         });
